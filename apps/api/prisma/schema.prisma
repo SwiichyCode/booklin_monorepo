@@ -1,0 +1,207 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// ENUMS
+// ========================================
+
+enum UserRole {
+  CLIENT
+  PRO
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+// ========================================
+// MODELS
+// ========================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      UserRole
+  firstName String?
+  lastName  String?
+  phone     String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  proProfile       ProProfile?
+  bookingsAsClient Booking[]   @relation("ClientBookings")
+  reviews          Review[]
+  messagesSent     Message[]   @relation("SentMessages")
+
+  @@map("users")
+}
+
+model ProProfile {
+  id           String    @id @default(uuid())
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  businessName String
+  bio          String?   @db.Text
+  profession   String    // "Coiffeur", "Barbier", "Masseur", etc.
+  
+  // Localisation
+  address      String
+  latitude     Float
+  longitude    Float
+  radius       Int       @default(5) // km
+  
+  // Media
+  photos       String[]  // Array of URLs
+  
+  // Premium
+  isPremium       Boolean   @default(false)
+  subscriptionEnd DateTime?
+  
+  // Stats
+  rating       Float?    @default(0)
+  reviewCount  Int       @default(0)
+  
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  services       Service[]
+  availabilities Availability[]
+  bookings       Booking[]
+  reviews        Review[]
+
+  @@map("pro_profiles")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  proId       String
+  pro         ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
+  
+  name        String
+  description String?  @db.Text
+  price       Float    // En euros
+  duration    Int      // En minutes
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  bookings    Booking[]
+
+  @@map("services")
+}
+
+model Availability {
+  id        String     @id @default(uuid())
+  proId     String
+  pro       ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
+  
+  dayOfWeek Int        // 0 = Dimanche, 6 = Samedi
+  startTime String     // Format "09:00"
+  endTime   String     // Format "18:00"
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([proId, dayOfWeek])
+  @@map("availabilities")
+}
+
+model Booking {
+  id            String        @id @default(uuid())
+  
+  clientId      String
+  client        User          @relation("ClientBookings", fields: [clientId], references: [id])
+  
+  proId         String
+  pro           ProProfile    @relation(fields: [proId], references: [id])
+  
+  serviceId     String
+  service       Service       @relation(fields: [serviceId], references: [id])
+  
+  date          DateTime      // Date de la prestation
+  startTime     String        // Format "14:00"
+  endTime       String        // Format "15:30"
+  
+  status        BookingStatus @default(PENDING)
+  
+  clientMessage String?       @db.Text // Message initial du client
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  review        Review?
+
+  @@map("bookings")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  clientId  String
+  client    User     @relation(fields: [clientId], references: [id])
+  
+  proId     String
+  pro       ProProfile @relation(fields: [proId], references: [id])
+  
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  
+  createdAt DateTime @default(now())
+
+  @@map("reviews")
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  
+  clientId  String
+  proId     String
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relations
+  messages  Message[]
+
+  @@unique([clientId, proId])
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  
+  senderId       String
+  sender         User         @relation("SentMessages", fields: [senderId], references: [id])
+  
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  content        String       @db.Text
+  read           Boolean      @default(false)
+  
+  createdAt      DateTime     @default(now())
+
+  @@map("messages")
+}
