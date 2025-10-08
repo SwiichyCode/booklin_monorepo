@@ -26,6 +26,19 @@ export const verifyClerkWebhook = async (req: Request, res: Response, next: Next
       });
     }
 
+    // Vérification timestamp (protection replay)
+
+    const timestamp = parseInt(headers['svix-timestamp'] as string, 10);
+    const now = Math.floor(Date.now() / 1000);
+    const TOLERANCE = 300; // 5 minutes
+
+    if (Math.abs(now - timestamp) > TOLERANCE) {
+      return res.status(400).json({
+        success: false,
+        error: 'Webhook timestamp too old or too far in future',
+      });
+    }
+
     // Vérification de la signature
     const event = svix.verify(payload, {
       'svix-id': headers['svix-id'] as string,
