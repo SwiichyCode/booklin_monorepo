@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(tree:*)",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(pnpm tsc:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

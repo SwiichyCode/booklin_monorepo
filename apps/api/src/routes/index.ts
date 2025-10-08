@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import type { Router as ExpressRouter } from 'express';
-import authRoutes from '../modules/auth/auth.routes';
+import webhooksRoutes from '../modules/webhooks/webhooks.routes';
 
 const router: ExpressRouter = Router();
-router.use('/auth', authRoutes);
+
+// Webhooks
+router.use('/webhooks', webhooksRoutes);
 
 export default router;
