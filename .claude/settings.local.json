@@ -4,7 +4,8 @@
       "Bash(tree:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm tsc:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(pnpm prisma migrate dev:*)"
     ],
     "deny": [],
     "ask": []

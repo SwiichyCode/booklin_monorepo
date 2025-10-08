@@ -25,6 +25,20 @@ enum BookingStatus {
   COMPLETED
 }
 
+enum OnboardingStep {
+  ENTERPRISE_INFO      // Étape 1
+  PROFESSIONAL_INFO    // Étape 2
+  LOCATION            // Étape 3
+  MEDIA               // Étape 4
+  COMPLETED           // Étape 5
+}
+
+enum ValidationStatus {
+  PENDING    // En attente validation
+  APPROVED   // Approuvé
+  REJECTED   // Rejeté
+}
+
 // ========================================
 // MODELS
 // ========================================
@@ -55,15 +69,34 @@ model ProProfile {
   userId       String    @unique
   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  businessName String
-  bio          String?   @db.Text
-  profession   String    // "Coiffeur", "Barbier", "Masseur", etc.
-  
+  businessName   String?
+  bio            String?   @db.Text
+  profession     String?   // "Coiffeur", "Barbier", "Masseur", etc.
+  experience     Int?
+  certifications String[]
+
   // Localisation
-  address      String
-  latitude     Float
-  longitude    Float
+  address      String?
+  postalCode   String?
+  city         String?
+  latitude     Float?
+  longitude    Float?
   radius       Int       @default(5) // km
+
+  // Business Info
+  siret         String?   @unique
+  corporateName String?
+  legalForm     String?
+  legalStatus   String?
+
+  // Onboarding
+  onboardingStep     OnboardingStep @default(ENTERPRISE_INFO)
+  onboardingProgress Int            @default(0)
+  onboardingComplete Boolean        @default(false)
+
+  // Validation & Status
+  validationStatus ValidationStatus @default(PENDING)
+  isActive         Boolean          @default(true)  
   
   // Media
   photos       String[]  // Array of URLs
