@@ -73,10 +73,16 @@ apps/api/
 │   ├── app.ts                     # ✅ MODIFIÉ
 │   └── server.ts                  # ✅ MODIFIÉ
 │
-├── HEXAGONAL_ARCHITECTURE.md      # ✨ NOUVEAU
-├── CONFIGURATION.md               # ✨ NOUVEAU
-├── ARCHITECTURE_SUMMARY.md        # ✨ NOUVEAU
-├── README.md                      # ✨ NOUVEAU
+├── documentation/                  # ✨ NOUVEAU
+│   ├── architecture/
+│   │   ├── HEXAGONAL_ARCHITECTURE.md
+│   │   └── ARCHITECTURE_SUMMARY.md
+│   ├── CONFIGURATION.md
+│   ├── MIGRATION_COMPLETE.md
+│   ├── VALIDATION_GUIDE.md
+│   ├── PATH_ALIASES_GUIDE.md
+│   └── PRISMA_LOCATION_GUIDE.md
+├── README.md                      # ✨ MODIFIÉ
 └── .env.example                   # ✨ NOUVEAU
 ```
 
@@ -247,9 +253,9 @@ curl -X POST http://localhost:4000/api/users \
 ## 🎓 Ressources
 
 ### Documentation locale
-- [HEXAGONAL_ARCHITECTURE.md](./HEXAGONAL_ARCHITECTURE.md) - Guide complet
+- [HEXAGONAL_ARCHITECTURE.md](./architecture/HEXAGONAL_ARCHITECTURE.md) - Guide complet
 - [CONFIGURATION.md](./CONFIGURATION.md) - Configuration détaillée
-- [ARCHITECTURE_SUMMARY.md](./ARCHITECTURE_SUMMARY.md) - Résumé visuel
+- [ARCHITECTURE_SUMMARY.md](./architecture/ARCHITECTURE_SUMMARY.md) - Résumé visuel
 
 ### Ressources externes
 - [Architecture Hexagonale (Alistair Cockburn)](https://alistair.cockburn.us/hexagonal-architecture/)

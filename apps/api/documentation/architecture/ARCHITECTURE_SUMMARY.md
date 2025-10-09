@@ -195,5 +195,5 @@ Pour migrer les autres modules (ProProfile, Booking, etc.) :
 ## 📚 Documentation
 
 - [HEXAGONAL_ARCHITECTURE.md](./HEXAGONAL_ARCHITECTURE.md) - Architecture complète
-- [CONFIGURATION.md](./CONFIGURATION.md) - Config, CORS, middlewares
-- [README.md](./README.md) - Démarrage et utilisation
+- [CONFIGURATION.md](../CONFIGURATION.md) - Config, CORS, middlewares
+- [README.md](../../README.md) - Démarrage et utilisation

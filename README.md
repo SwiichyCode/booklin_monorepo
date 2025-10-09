@@ -97,8 +97,8 @@ booklin_monorepo/
 │       │   └── shared/        # Config & DI
 │       │
 │       ├── prisma/            # Database schema & migrations
-│       ├── README.md          # API documentation
-│       └── HEXAGONAL_ARCHITECTURE.md
+│       ├── documentation/     # Architecture & guides
+│       └── README.md          # API documentation
 │
 ├── packages/                   # Shared packages
 │   └── typescript-config/     # Shared TS configs
@@ -204,9 +204,13 @@ See [CLAUDE.md](./CLAUDE.md) for detailed conventions and best practices.
 For detailed API documentation, architecture, and configuration:
 
 - **[apps/api/README.md](./apps/api/README.md)** - Getting started with the API
-- **[apps/api/HEXAGONAL_ARCHITECTURE.md](./apps/api/HEXAGONAL_ARCHITECTURE.md)** - Complete architecture guide
-- **[apps/api/CONFIGURATION.md](./apps/api/CONFIGURATION.md)** - Environment variables, CORS, middlewares
-- **[apps/api/ARCHITECTURE_SUMMARY.md](./apps/api/ARCHITECTURE_SUMMARY.md)** - Visual architecture summary
+- **[Hexagonal Architecture](./apps/api/documentation/architecture/HEXAGONAL_ARCHITECTURE.md)** - Complete architecture guide
+- **[Configuration Guide](./apps/api/documentation/CONFIGURATION.md)** - Environment variables, CORS, middlewares
+- **[Architecture Summary](./apps/api/documentation/architecture/ARCHITECTURE_SUMMARY.md)** - Visual architecture summary
+- **[Validation Guide](./apps/api/documentation/VALIDATION_GUIDE.md)** - HTTP validation with Zod
+- **[Path Aliases Guide](./apps/api/documentation/PATH_ALIASES_GUIDE.md)** - Using @/ imports
+- **[Prisma Location Guide](./apps/api/documentation/PRISMA_LOCATION_GUIDE.md)** - Prisma in hexagonal architecture
+- **[Migration Complete](./apps/api/documentation/MIGRATION_COMPLETE.md)** - Migration summary
 
 ### Project Context
 

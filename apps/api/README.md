@@ -16,8 +16,13 @@ src/
 ```
 
 📚 **Documentation détaillée** :
-- [Architecture Hexagonale](./HEXAGONAL_ARCHITECTURE.md) - Structure et patterns
-- [Configuration](./CONFIGURATION.md) - Variables d'env, CORS, middlewares
+- [Architecture Hexagonale](./documentation/architecture/HEXAGONAL_ARCHITECTURE.md) - Structure et patterns
+- [Architecture Summary](./documentation/architecture/ARCHITECTURE_SUMMARY.md) - Résumé visuel
+- [Configuration](./documentation/CONFIGURATION.md) - Variables d'env, CORS, middlewares
+- [Validation Guide](./documentation/VALIDATION_GUIDE.md) - HTTP validation avec Zod
+- [Path Aliases Guide](./documentation/PATH_ALIASES_GUIDE.md) - Using @/ imports
+- [Prisma Location Guide](./documentation/PRISMA_LOCATION_GUIDE.md) - Prisma in hexagonal architecture
+- [Migration Complete](./documentation/MIGRATION_COMPLETE.md) - Migration summary
 
 ## 🚀 Démarrage rapide
 
