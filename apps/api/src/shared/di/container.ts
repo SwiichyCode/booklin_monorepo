@@ -15,6 +15,12 @@ import { UserService } from '../../core/services/UserService';
 
 // Controllers
 import { UserController } from '../../adapters/in/http/controllers/UserController';
+import { WebhookController } from '../../adapters/in/http/controllers/WebhookController';
+
+// Webhook Services
+import { WebhookService } from '../../core/services/WebhookService';
+import { ProcessWebhookUseCase } from '../../core/ports/in/ProcessWebhookUseCase';
+import { VerifyWebhookUseCase } from '../../core/ports/in/VerifyWebhookUseCase';
 
 export function setupContainer(): void {
   // Infrastructure - PrismaClient (singleton)
@@ -66,6 +72,41 @@ export function setupContainer(): void {
 
   // Controllers (singleton)
   container.registerSingleton(UserController);
+
+  // ========================================
+  // WEBHOOK MODULE
+  // ========================================
+
+  // Webhook Services
+  // UserService est utilisé par WebhookService, donc on l'enregistre comme 'UserService' aussi
+  container.register('UserService', {
+    useFactory: (c) => c.resolve('UserServiceInstance'),
+  });
+
+  // WebhookService singleton
+  container.registerSingleton('WebhookServiceInstance', WebhookService);
+
+  // Webhook Use Cases
+  container.register('ProcessWebhookUseCase', {
+    useFactory: (c) => {
+      const service = c.resolve<WebhookService>('WebhookServiceInstance');
+      return {
+        execute: (command: any) => service.processWebhook(command),
+      };
+    },
+  });
+
+  container.register('VerifyWebhookUseCase', {
+    useFactory: (c) => {
+      const service = c.resolve<WebhookService>('WebhookServiceInstance');
+      return {
+        execute: (command: any) => service.verifyWebhook(command),
+      };
+    },
+  });
+
+  // Webhook Controller
+  container.registerSingleton(WebhookController);
 }
 
 export { container };

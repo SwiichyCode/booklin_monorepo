@@ -18,6 +18,7 @@ export interface EnvConfig {
 
   // External Services
   clerkSecretKey?: string;
+  clerkWebhookSecret?: string;
   stripeSecretKey?: string;
   sendgridApiKey?: string;
   cloudinaryCloudName?: string;
@@ -53,6 +54,7 @@ class EnvironmentConfig {
 
       // External Services
       clerkSecretKey: process.env.CLERK_SECRET_KEY,
+      clerkWebhookSecret: process.env.CLERK_WEBHOOK_SECRET,
       stripeSecretKey: process.env.STRIPE_SECRET_KEY,
       sendgridApiKey: process.env.SENDGRID_API_KEY,
       cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
