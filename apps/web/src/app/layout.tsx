@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '../styles/globals.css';
+import { ReactQueryProvider } from '@/lib/providers/react-query.provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+        <ReactQueryProvider>
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+        </ReactQueryProvider>
       </html>
     </ClerkProvider>
   );
