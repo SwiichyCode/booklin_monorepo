@@ -1,14 +1,43 @@
+import 'reflect-metadata'; // IMPORTANT: doit être en premier !
 import express from 'express';
-import cors from 'cors';
-import routes from './routes';
 import type { Express } from 'express';
-import { clerkMiddleware } from '@clerk/express';
+
+// Configuration
+import { setupContainer } from './shared/di/container';
+import { corsMiddleware } from './adapters/in/http/config/cors.config';
+import { requestLogger } from './adapters/in/http/middleware/logger';
+import { errorHandler, notFoundHandler } from './adapters/in/http/middleware/errorHandler';
+
+// Routes
+import routes from './routes';
+
+// Setup Dependency Injection
+setupContainer();
 
 export const createApp = (): Express => {
   const app = express();
-  app.use(cors());
-  app.use(express.json());
+
+  // Middlewares globaux
+  app.use(corsMiddleware); // CORS configuré
+  app.use(express.json()); // Parse JSON body
+  app.use(express.urlencoded({ extended: true })); // Parse URL-encoded body
+  app.use(requestLogger); // Logger des requêtes
+
+  // Health check endpoint
+  app.get('/health', (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'API is running',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  // Routes de l'API
   app.use('/api', routes);
+
+  // Middleware de gestion des erreurs (doit être APRÈS les routes)
+  app.use(notFoundHandler); // 404
+  app.use(errorHandler); // Erreurs globales
 
   return app;
 };

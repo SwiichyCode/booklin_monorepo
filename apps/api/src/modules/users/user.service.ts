@@ -17,10 +17,6 @@ export class UserService implements IUserService {
   constructor(private userRepository: IUserRepository = new UserRepository()) {}
 
   async createUser(data: CreateUserDTO): Promise<User> {
-    // Validation et logique métier ici si nécessaire
-    // Ex: vérifier si l'email existe déjà, normaliser les données, etc.
-
-    // Normaliser l'email en lowercase si présent
     const normalizedData = {
       ...data,
       email: data.email?.toLowerCase() || null,
@@ -30,9 +26,6 @@ export class UserService implements IUserService {
   }
 
   async updateUser(clerkId: string, data: UpdateUserDTO): Promise<User> {
-    // Validation et transformation des données si nécessaire
-
-    // Normaliser l'email en lowercase si présent
     const normalizedData = {
       ...data,
       email: data.email ? data.email.toLowerCase() : undefined,
@@ -42,8 +35,6 @@ export class UserService implements IUserService {
   }
 
   async deleteUser(clerkId: string): Promise<User> {
-    // Logique métier avant suppression (ex: cleanup, soft delete, etc.)
-    // Pour l'instant, suppression directe
     return await this.userRepository.delete(clerkId);
   }
 
@@ -56,15 +47,11 @@ export class UserService implements IUserService {
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
-    // Normaliser l'email pour la recherche
     return await this.userRepository.findByEmail(email.toLowerCase());
   }
 
   async getUsers(filter?: UserFilter): Promise<User[]> {
-    // Normaliser le filtre si nécessaire
-    const normalizedFilter = filter?.email
-      ? { ...filter, email: filter.email.toLowerCase() }
-      : filter;
+    const normalizedFilter = filter?.email ? { ...filter, email: filter.email.toLowerCase() } : filter;
 
     return await this.userRepository.findMany(normalizedFilter);
   }

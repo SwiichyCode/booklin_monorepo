@@ -1,8 +1,18 @@
-// apps/api/src/server.ts
 import { createApp } from './app';
-import { env } from './config/env';
+import { env, envConfig } from './shared/config/env';
 
 const app = createApp();
-app.listen(env.PORT, () => {
-  console.log(`🚀 Server on http://localhost:${env.PORT}`);
+
+const PORT = env.port;
+
+app.listen(PORT, () => {
+  console.log('🚀 Server started successfully!');
+  console.log(`📡 API running on: ${env.apiUrl}`);
+  console.log(`🌍 Environment: ${env.nodeEnv}`);
+  console.log(`📊 Health check: ${env.apiUrl}/health`);
+  console.log(`🔌 Allowed origins: ${env.allowedOrigins.join(', ')}`);
+
+  if (envConfig.isDevelopment()) {
+    console.log('\n💡 Development mode - All CORS origins allowed');
+  }
 });

@@ -25,7 +25,9 @@
     "jsonwebtoken": "^9.0.2",
     "pino": "^10.0.0",
     "pino-http": "^11.0.0",
+    "reflect-metadata": "^0.2.2",
     "svix": "^1.76.1",
+    "tsyringe": "^4.10.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
