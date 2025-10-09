@@ -7,7 +7,9 @@
 
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { env, isDevelopment } from '../config/env';
+import { envConfig } from '../shared/config/env';
+
+const isDevelopment = envConfig.isDevelopment();
 
 /**
  * Instance Pino configurée
@@ -15,7 +17,7 @@ import { env, isDevelopment } from '../config/env';
  * En production: format JSON pour les outils d'agrégation de logs
  */
 export const logger = pino({
-  level: env.LOG_LEVEL,
+  level: envConfig.get().logLevel,
   transport: isDevelopment
     ? {
         target: 'pino-pretty',

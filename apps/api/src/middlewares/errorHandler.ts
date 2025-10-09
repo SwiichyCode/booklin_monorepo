@@ -16,7 +16,9 @@ import { ZodError } from 'zod';
 import { AppError } from '../shared/types/errors';
 import { errorResponse } from '../shared/types/response';
 import { logger } from './logger';
-import { isDevelopment } from '../config/env';
+import { envConfig } from '../shared/config/env';
+
+const isDevelopment = envConfig.isDevelopment();
 
 /**
  * Middleware de gestion d'erreurs

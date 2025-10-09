@@ -8,11 +8,11 @@ import { corsMiddleware } from './adapters/in/http/config/cors.config';
 import { requestLogger } from './adapters/in/http/middleware/logger';
 import { errorHandler, notFoundHandler } from './adapters/in/http/middleware/errorHandler';
 
-// Routes
-import routes from './routes';
-
-// Setup Dependency Injection
+// Setup Dependency Injection AVANT d'importer les routes
 setupContainer();
+
+// Routes (importées APRÈS setupContainer)
+import routes from './routes';
 
 export const createApp = (): Express => {
   const app = express();

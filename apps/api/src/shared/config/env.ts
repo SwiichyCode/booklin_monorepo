@@ -8,6 +8,7 @@ export interface EnvConfig {
   nodeEnv: 'development' | 'production' | 'test';
   port: number;
   apiUrl: string;
+  logLevel: string;
 
   // Database
   databaseUrl: string;
@@ -42,6 +43,7 @@ class EnvironmentConfig {
       nodeEnv: (process.env.NODE_ENV as EnvConfig['nodeEnv']) || 'development',
       port: parseInt(process.env.PORT || '4000', 10),
       apiUrl: process.env.API_URL || 'http://localhost:4000',
+      logLevel: process.env.LOG_LEVEL || 'info',
 
       // Database
       databaseUrl: process.env.DATABASE_URL || '',
