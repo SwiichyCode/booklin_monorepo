@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
+import { prismaClient } from '../../adapters/out/persistence/prisma/client';
 
 // Repositories
 import { UserRepository } from '../../core/ports/out/UserRepository';
@@ -24,7 +25,7 @@ import { VerifyWebhookUseCase } from '../../core/ports/in/VerifyWebhookUseCase';
 
 export function setupContainer(): void {
   // Infrastructure - PrismaClient (singleton)
-  const prismaClient = new PrismaClient();
+  // Utilise l'instance configurée depuis adapters/out/persistence/prisma/client.ts
   container.register('PrismaClient', {
     useValue: prismaClient,
   });
