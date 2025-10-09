@@ -1,6 +1,6 @@
 import cors from 'cors';
 import type { CorsOptions } from 'cors';
-import { env, envConfig } from '../../../../shared/config/env';
+import { env, envConfig } from '@/shared/config/env';
 
 /**
  * Configuration CORS pour l'API
@@ -28,12 +28,7 @@ export const corsConfig: CorsOptions = {
   credentials: true, // Permettre les cookies/auth headers
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With',
-    'Accept',
-  ],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 };
 
 export const corsMiddleware = cors(corsConfig);

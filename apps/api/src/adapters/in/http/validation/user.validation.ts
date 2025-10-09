@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { UserRole } from '../../../../core/domain/entities/User';
+import { UserRole } from '@/core/domain/entities/User';
 
 /**
  * Schema pour la création d'un utilisateur

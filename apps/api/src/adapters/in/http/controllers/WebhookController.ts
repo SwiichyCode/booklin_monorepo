@@ -7,8 +7,8 @@
 
 import { injectable, inject } from 'tsyringe';
 import type { Request, Response } from 'express';
-import type { ProcessWebhookUseCase } from '../../../../core/ports/in/ProcessWebhookUseCase';
-import type { WebhookEvent } from '../../../../core/domain/entities/WebhookEvent';
+import type { ProcessWebhookUseCase } from '@/core/ports/in/ProcessWebhookUseCase';
+import type { WebhookEvent } from '@/core/domain/entities/WebhookEvent';
 
 @injectable()
 export class WebhookController {

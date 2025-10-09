@@ -12,7 +12,7 @@ import { errorHandler, notFoundHandler } from './adapters/in/http/middleware/err
 setupContainer();
 
 // Routes (importées APRÈS setupContainer)
-import routes from './routes';
+import routes from '@/adapters/in/http/routes';
 
 export const createApp = (): Express => {
   const app = express();

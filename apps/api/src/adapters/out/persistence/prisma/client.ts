@@ -8,7 +8,7 @@
  */
 
 import { PrismaClient } from '@prisma/client';
-import { envConfig } from '../../../../shared/config/env';
+import { envConfig } from '@/shared/config/env';
 
 const isDevelopment = envConfig.isDevelopment();
 

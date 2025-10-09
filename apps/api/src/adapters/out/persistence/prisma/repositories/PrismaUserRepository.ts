@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
-import { UserRepository, UserFilter } from '../../../../../core/ports/out/UserRepository';
-import { User } from '../../../../../core/domain/entities/User';
-import { UserMapper } from '../mappers/UserMapper';
+import { UserRepository, UserFilter } from '@/core/ports/out/UserRepository';
+import { User } from '@/core/domain/entities/User';
+import { UserMapper } from '@/adapters/out/persistence/prisma/mappers/UserMapper';
 
 @injectable()
 export class PrismaUserRepository implements UserRepository {

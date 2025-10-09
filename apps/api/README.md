@@ -89,9 +89,23 @@ GET    /api/users                   # Liste
 POST /api/webhooks/clerk            # Webhooks Clerk
 ```
 
-### Pro Profiles
+### Pro Profiles (Architecture Hexagonale)
 ```bash
-# À documenter après migration architecture hexagonale
+POST   /api/pro-profiles                      # Créer profil pro
+PATCH  /api/pro-profiles/:id                  # Mettre à jour
+DELETE /api/pro-profiles/:id                  # Supprimer
+GET    /api/pro-profiles/:id                  # Par ID
+GET    /api/pro-profiles/user/:userId         # Par User ID
+GET    /api/pro-profiles                      # Liste (avec filtres)
+
+# Approval
+POST   /api/pro-profiles/:id/approve          # Approuver (admin)
+POST   /api/pro-profiles/:id/reject           # Rejeter (admin)
+
+# Premium
+POST   /api/pro-profiles/:id/premium/activate      # Activer premium
+POST   /api/pro-profiles/:id/premium/renew         # Renouveler premium
+POST   /api/pro-profiles/:id/premium/deactivate    # Désactiver premium
 ```
 
 ## 🧪 Tests

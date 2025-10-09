@@ -74,7 +74,7 @@ model ProProfile {
   profession     String?   // "Coiffeur", "Barbier", "Masseur", etc.
   experience     Int?
   certifications String[]
-
+ 
   // Localisation
   address      String?
   postalCode   String?
@@ -96,6 +96,7 @@ model ProProfile {
 
   // Validation & Status
   validationStatus ValidationStatus @default(PENDING)
+  rejectionReason  String?
   isActive         Boolean          @default(true)  
   
   // Media

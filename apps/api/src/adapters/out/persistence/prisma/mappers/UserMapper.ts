@@ -1,6 +1,6 @@
 import { User as PrismaUser, UserRole as PrismaUserRole } from '@prisma/client';
-import { User, UserRole } from '../../../../../core/domain/entities/User';
-import { Email } from '../../../../../core/domain/value-objects/Email';
+import { User, UserRole } from '@/core/domain/entities/User';
+import { Email } from '@/core/domain/value-objects/Email';
 
 export class UserMapper {
   static toDomain(prismaUser: PrismaUser): User {

@@ -210,7 +210,8 @@ For detailed API documentation, architecture, and configuration:
 - **[Validation Guide](./apps/api/documentation/VALIDATION_GUIDE.md)** - HTTP validation with Zod
 - **[Path Aliases Guide](./apps/api/documentation/PATH_ALIASES_GUIDE.md)** - Using @/ imports
 - **[Prisma Location Guide](./apps/api/documentation/PRISMA_LOCATION_GUIDE.md)** - Prisma in hexagonal architecture
-- **[Migration Complete](./apps/api/documentation/MIGRATION_COMPLETE.md)** - Migration summary
+- **[Migration Complete](./apps/api/documentation/MIGRATION_COMPLETE.md)** - User module migration summary
+- **[ProProfile Migration](./apps/api/documentation/PROPROFILE_MIGRATION.md)** - ProProfile module migration (NEW!)
 
 ### Project Context
 

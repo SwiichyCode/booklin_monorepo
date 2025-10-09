@@ -22,4 +22,4 @@ router.post('/clerk', verifyClerkWebhook, (req, res) => webhookController.handle
 // Stripe Webhooks (à venir)
 // router.post('/stripe', verifyStripeWebhook, (req, res) => webhookController.handleStripeWebhook(req, res));
 
-export default router;
+export { router as webhooksRoutes };
