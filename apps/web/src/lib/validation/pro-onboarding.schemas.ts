@@ -16,10 +16,9 @@ export const enterpriseInfoSchema = z.object({
     .int()
     .min(0, "L'expérience ne peut pas être négative")
     .max(50, "L'expérience semble trop élevée")
-    .optional()
-    .or(z.literal('')),
+    .optional(),
 
-  certifications: z.array(z.string()).optional().default([]),
+  certifications: z.array(z.string()).optional(),
 
   bio: z
     .string()

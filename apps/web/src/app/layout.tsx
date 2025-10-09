@@ -26,11 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <ReactQueryProvider>
+      <ReactQueryProvider>
+        <html lang="en">
           <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
-        </ReactQueryProvider>
-      </html>
+        </html>
+      </ReactQueryProvider>
     </ClerkProvider>
   );
 }
