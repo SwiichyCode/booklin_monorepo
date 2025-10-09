@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { injectable, inject } from 'tsyringe';
 import { ZodError } from 'zod';
-import type { CreateUserUseCase } from '../../../../core/ports/in/CreateUserUseCase';
-import type { UpdateUserUseCase } from '../../../../core/ports/in/UpdateUserUseCase';
-import type { DeleteUserUseCase } from '../../../../core/ports/in/DeleteUserUseCase';
-import type { GetUserUseCase } from '../../../../core/ports/in/GetUserUseCase';
-import { DomainError } from '../../../../core/domain/errors/DomainError';
+import type { CreateUserUseCase } from '@/core/ports/in/CreateUserUseCase';
+import type { UpdateUserUseCase } from '@/core/ports/in/UpdateUserUseCase';
+import type { DeleteUserUseCase } from '@/core/ports/in/DeleteUserUseCase';
+import type { GetUserUseCase } from '@/core/ports/in/GetUserUseCase';
+import { DomainError } from '@/core/domain/errors/DomainError';
 import {
   createUserSchema,
   updateUserSchema,
@@ -13,7 +13,7 @@ import {
   idParamSchema,
   emailParamSchema,
   getUsersQuerySchema,
-} from '../validation/user.validation';
+} from '@/adapters/in/http/validation/user.validation';
 
 @injectable()
 export class UserController {

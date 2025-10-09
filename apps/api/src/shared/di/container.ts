@@ -1,27 +1,27 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
-import { prismaClient } from '../../adapters/out/persistence/prisma/client';
+import { prismaClient } from '@/adapters/out/persistence/prisma/client';
 
 // Repositories
-import { UserRepository } from '../../core/ports/out/UserRepository';
-import { PrismaUserRepository } from '../../adapters/out/persistence/prisma/repositories/PrismaUserRepository';
+import { UserRepository } from '@/core/ports/out/UserRepository';
+import { PrismaUserRepository } from '@/adapters/out/persistence/prisma/repositories/PrismaUserRepository';
 
 // Use Cases
-import { CreateUserUseCase } from '../../core/ports/in/CreateUserUseCase';
-import { UpdateUserUseCase } from '../../core/ports/in/UpdateUserUseCase';
-import { DeleteUserUseCase } from '../../core/ports/in/DeleteUserUseCase';
-import { GetUserUseCase } from '../../core/ports/in/GetUserUseCase';
-import { UserService } from '../../core/services/UserService';
+import { CreateUserUseCase } from '@/core/ports/in/CreateUserUseCase';
+import { UpdateUserUseCase } from '@/core/ports/in/UpdateUserUseCase';
+import { DeleteUserUseCase } from '@/core/ports/in/DeleteUserUseCase';
+import { GetUserUseCase } from '@/core/ports/in/GetUserUseCase';
+import { UserService } from '@/core/services/UserService';
 
 // Controllers
-import { UserController } from '../../adapters/in/http/controllers/UserController';
-import { WebhookController } from '../../adapters/in/http/controllers/WebhookController';
+import { UserController } from '@/adapters/in/http/controllers/UserController';
+import { WebhookController } from '@/adapters/in/http/controllers/WebhookController';
 
 // Webhook Services
-import { WebhookService } from '../../core/services/WebhookService';
-import { ProcessWebhookUseCase } from '../../core/ports/in/ProcessWebhookUseCase';
-import { VerifyWebhookUseCase } from '../../core/ports/in/VerifyWebhookUseCase';
+import { WebhookService } from '@/core/services/WebhookService';
+import { ProcessWebhookUseCase } from '@/core/ports/in/ProcessWebhookUseCase';
+import { VerifyWebhookUseCase } from '@/core/ports/in/VerifyWebhookUseCase';
 
 export function setupContainer(): void {
   // Infrastructure - PrismaClient (singleton)
