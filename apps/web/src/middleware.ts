@@ -1,6 +1,20 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default clerkMiddleware();
+const isPublicRoute = createRouteMatcher(['/', '/sign-in', '/sign-up']);
+
+export default clerkMiddleware(async (auth, request) => {
+  const { userId } = await auth();
+
+  if (!isPublicRoute(request) && !userId) {
+    const message = encodeURIComponent('Veuillez vous connecter pour accéder à cette page');
+    const redirectTo = encodeURIComponent(request.nextUrl.pathname);
+
+    return NextResponse.redirect(new URL(`/sign-in?message=${message}&redirectTo=${redirectTo}`, request.url));
+  }
+
+  return NextResponse.next();
+});
 
 export const config = {
   matcher: [
