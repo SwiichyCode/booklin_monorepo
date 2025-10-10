@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import type { Router as ExpressRouter } from 'express';
-
 import { userRoutes } from '@/adapters/in/http/routes/user.routes';
 import { webhooksRoutes } from '@/adapters/in/http/routes/webhooks.routes';
 import proProfileRoutes from '@/adapters/in/http/routes/proProfile.routes';

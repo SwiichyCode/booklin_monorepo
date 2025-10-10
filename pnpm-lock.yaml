@@ -26,6 +26,9 @@ importers:
       '@prisma/client':
         specifier: ^6.17.0
         version: 6.17.0(prisma@6.17.0(typescript@5.9.3))(typescript@5.9.3)
+      '@repo/endpoints':
+        specifier: workspace:*
+        version: link:../../packages/endpoints
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -123,6 +126,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.3
         version: 1.2.3(@types/react@19.1.0)(react@19.1.0)
+      '@repo/endpoints':
+        specifier: workspace:*
+        version: link:../../packages/endpoints
       '@tanstack/react-query':
         specifier: ^5.90.2
         version: 5.90.2(react@19.1.0)
@@ -196,6 +202,15 @@ importers:
       typescript:
         specifier: ^5
         version: 5.9.2
+
+  packages/endpoints:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
 
   packages/eslint-config:
     devDependencies:
