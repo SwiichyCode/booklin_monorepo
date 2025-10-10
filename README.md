@@ -1,5 +1,11 @@
 # 🏠 Booklin - Home Services Marketplace
 
+<div align="center">
+
+**📖 Documentation:** [🇬🇧 English](./docs/en/README.md) | [🇫🇷 Français](./docs/fr/README.md)
+
+</div>
+
 > **Version**: 0.1.0 (MVP in development)
 > **Last Update**: October 2025
 
@@ -143,9 +149,10 @@ booklin_monorepo/
 ```
 
 **📚 For detailed architecture**, see:
-- [API Architecture](./apps/api/README.md)
-- [Hexagonal Architecture Guide](./apps/api/documentation/architecture/HEXAGONAL_ARCHITECTURE.md)
-- [Endpoints Package](./packages/endpoints/README.md)
+- [📖 Complete Documentation](./docs/en/README.md) - Full documentation hub
+- [API Architecture](./docs/en/api/README.md) - Backend documentation
+- [Hexagonal Architecture Guide](./docs/en/api/architecture/hexagonal-architecture.md) - Architecture patterns
+- [Endpoints Package](./docs/en/packages/endpoints/README.md) - Centralized API routes
 
 ---
 
@@ -236,27 +243,34 @@ See [CLAUDE.md](./CLAUDE.md) for detailed conventions and best practices.
 
 ## 📚 Documentation
 
-### API Documentation
+### 🌍 Available Languages
 
-For detailed API documentation, architecture, and configuration:
+- **[🇬🇧 English Documentation](./docs/en/README.md)** - Complete English documentation
+- **[🇫🇷 Documentation Française](./docs/fr/README.md)** - Documentation complète en français
 
-- **[apps/api/README.md](./apps/api/README.md)** - Getting started with the API
-- **[Hexagonal Architecture](./apps/api/documentation/architecture/HEXAGONAL_ARCHITECTURE.md)** - Complete architecture guide
-- **[Configuration Guide](./apps/api/documentation/CONFIGURATION.md)** - Environment variables, CORS, middlewares
-- **[Architecture Summary](./apps/api/documentation/architecture/ARCHITECTURE_SUMMARY.md)** - Visual architecture summary
-- **[Validation Guide](./apps/api/documentation/VALIDATION_GUIDE.md)** - HTTP validation with Zod
-- **[Path Aliases Guide](./apps/api/documentation/PATH_ALIASES_GUIDE.md)** - Using @/ imports
-- **[Prisma Location Guide](./apps/api/documentation/PRISMA_LOCATION_GUIDE.md)** - Prisma in hexagonal architecture
-- **[Migration Complete](./apps/api/documentation/MIGRATION_COMPLETE.md)** - User module migration summary
-- **[ProProfile Migration](./apps/api/documentation/PROPROFILE_MIGRATION.md)** - ProProfile module migration (NEW!)
+### Quick Links
+
+**API Documentation**
+- [Getting Started](./docs/en/api/README.md) - Quick start guide
+- [Hexagonal Architecture](./docs/en/api/architecture/hexagonal-architecture.md) - Architecture patterns and principles
+- [Configuration Guide](./docs/en/api/guides/configuration.md) - Environment setup and configuration
+- [Validation Guide](./docs/en/api/guides/validation.md) - HTTP validation with Zod
+
+**Packages**
+- [Endpoints Package](./docs/en/packages/endpoints/README.md) - Centralized API route definitions
+- [Usage Examples](./docs/en/packages/endpoints/examples.md) - Complete integration examples
+
+**Migrations**
+- [User Module](./docs/en/api/migrations/user-module.md) - User module architecture migration
+- [ProProfile Module](./docs/en/api/migrations/proprofile-module.md) - ProProfile module migration
 
 ### Project Context
 
-- **[CLAUDE.md](./CLAUDE.md)** - Detailed project context, business model, and guidelines
+- **[CLAUDE.md](./CLAUDE.md)** - Detailed project context and guidelines (private)
 
 ### Database
 
-Database schema is defined in `apps/api/prisma/schema.prisma`. See the API documentation for details on:
+Database schema is defined in `apps/api/prisma/schema.prisma`. See the [API documentation](./docs/en/api/README.md) for details on:
 - Models (User, ProProfile, Booking, Review, etc.)
 - Relationships
 - Enums
