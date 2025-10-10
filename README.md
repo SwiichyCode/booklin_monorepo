@@ -19,32 +19,46 @@ Marketplace SaaS connecting home service professionals (hairdressers, barbers, m
 
 ## 🎯 Overview
 
-### Problem We're Solving
+**Booklin** is a modern home services marketplace that connects verified professionals with clients. The platform features a subscription-based business model, comprehensive professional profiles, and a streamlined booking system.
 
-- **For Professionals**: Competitors like Wecasa take 25% commission → **Our solution**: Fixed €49/month subscription, they keep 100% of their revenue
-- **For Clients**: Hard to find trusted professionals nearby → **Our solution**: Centralized platform with verified reviews
+### What We're Building
 
-### Key Differentiators vs Wecasa
-
-1. **Business Model**: Monthly subscription instead of 25% commission
-2. **Pro Selection**: Client chooses their professional from the first booking
-3. **Human Support**: Customer service accessible by phone
-4. **Quality Selection**: Strict vetting of professionals
+- **Professional Marketplace**: Platform for home service professionals (hairdressers, barbers, massage therapists, etc.)
+- **Client Platform**: Easy discovery and booking of trusted professionals
+- **Subscription Model**: Alternative revenue model for service professionals
+- **Quality Focus**: Verified profiles with authentic reviews
 
 ---
 
 ## ✨ Key Features
 
+### Architecture & Infrastructure
 - ✅ **Hexagonal Architecture** with dependency injection (TSyringe)
-- ✅ **User Management** (Clerk authentication + custom user system)
-- ✅ **Professional Profiles** with onboarding flow
-- ✅ **PostgreSQL Database** with Prisma ORM
+- ✅ **Monorepo** with Turborepo + pnpm workspaces
+- ✅ **Centralized Endpoints** package for API route consistency
 - ✅ **Type-safe API** with TypeScript strict mode
-- ✅ **Monorepo** with Turborepo for optimal performance
+- ✅ **PostgreSQL Database** with Prisma ORM
+
+### Authentication & User Management
+- ✅ **Clerk Authentication** integration (webhooks + client SDK)
+- ✅ **Custom User System** with role-based access
+- ✅ **Webhook Synchronization** (Clerk events)
+
+### Professional Features
+- ✅ **Professional Profiles** with comprehensive onboarding flow
+- ✅ **Multi-step Onboarding** with React Query state management
+- ✅ **Profile Validation** system (pending/approved/rejected)
+- ✅ **Premium Subscriptions** management
+
+### Developer Experience
+- ✅ **Component Library** with Shadcn/ui
+- ✅ **Form Validation** with React Hook Form + Zod
+- ✅ **API Documentation** with comprehensive guides
+- ✅ **Shared Packages** (types, configs, endpoints)
 
 ### Roadmap
 
-See [CLAUDE.md](./CLAUDE.md) for detailed roadmap and business model.
+See [CLAUDE.md](./CLAUDE.md) for detailed roadmap.
 
 ---
 
@@ -52,11 +66,13 @@ See [CLAUDE.md](./CLAUDE.md) for detailed roadmap and business model.
 
 ### Frontend (`apps/web`)
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS v4
 - **UI Components**: Shadcn/ui
 - **State Management**: Zustand
+- **Data Fetching**: React Query (TanStack Query)
+- **Forms**: React Hook Form + Zod validation
 - **Authentication**: Clerk
 
 ### Backend (`apps/api`)
@@ -64,8 +80,11 @@ See [CLAUDE.md](./CLAUDE.md) for detailed roadmap and business model.
 - **Runtime**: Node.js
 - **Framework**: Express
 - **Language**: TypeScript
+- **Architecture**: Hexagonal (Ports & Adapters)
+- **Dependency Injection**: TSyringe
 - **Database**: PostgreSQL
 - **ORM**: Prisma
+- **Validation**: Zod
 - **Authentication**: Clerk (webhook-based)
 
 ### Infrastructure
@@ -88,27 +107,45 @@ booklin_monorepo/
 │   ├── web/                    # Next.js frontend
 │   │   ├── app/               # App Router pages
 │   │   ├── components/        # React components
-│   │   └── lib/               # Utils & helpers
+│   │   │   ├── features/     # Feature-specific components
+│   │   │   ├── layouts/      # Layout components
+│   │   │   ├── shared/       # Shared components
+│   │   │   └── ui/           # Base UI components (Shadcn)
+│   │   ├── lib/               # Utils, hooks & API clients
+│   │   └── stores/            # Zustand stores
 │   │
 │   └── api/                    # Express backend (Hexagonal Architecture)
 │       ├── src/
-│       │   ├── core/          # Domain logic (business rules)
-│       │   ├── adapters/      # Infrastructure (HTTP, DB, etc.)
-│       │   └── shared/        # Config & DI
+│       │   ├── core/          # Domain logic (use cases, entities)
+│       │   │   ├── domain/    # Domain entities & value objects
+│       │   │   └── use-cases/ # Application business logic
+│       │   ├── adapters/      # Infrastructure layer
+│       │   │   ├── in/http/   # HTTP controllers & routes
+│       │   │   └── out/       # Database repositories
+│       │   └── shared/        # Config, DI, utilities
 │       │
 │       ├── prisma/            # Database schema & migrations
 │       ├── documentation/     # Architecture & guides
 │       └── README.md          # API documentation
 │
-├── packages/                   # Shared packages
-│   └── typescript-config/     # Shared TS configs
+├── packages/                   # Shared workspace packages
+│   ├── endpoints/             # Centralized API route definitions
+│   │   ├── lib/              # Types, config, helpers
+│   │   └── endpoints/        # Route definitions by module
+│   ├── typescript-config/     # Shared TypeScript configs
+│   ├── eslint-config/         # Shared ESLint configs
+│   ├── prettier-config/       # Shared Prettier config
+│   └── ui/                    # Shared UI components (future)
 │
-├── turbo.json
+├── turbo.json                  # Turborepo configuration
 ├── CLAUDE.md                   # Project context & guidelines
 └── README.md                   # This file
 ```
 
-**📚 For detailed API architecture**, see [apps/api/README.md](./apps/api/README.md)
+**📚 For detailed architecture**, see:
+- [API Architecture](./apps/api/README.md)
+- [Hexagonal Architecture Guide](./apps/api/documentation/architecture/HEXAGONAL_ARCHITECTURE.md)
+- [Endpoints Package](./packages/endpoints/README.md)
 
 ---
 
