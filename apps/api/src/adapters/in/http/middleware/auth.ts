@@ -7,6 +7,19 @@ import { Request, Response, NextFunction } from 'express';
 
 type UserRole = $Enums.UserRole;
 
+export function RequireAuthMiddleware() {
+  return async (req: Request, _res: Response, next: NextFunction) => {
+    try {
+      const { isAuthenticated, userId } = getAuth(req);
+      if (!isAuthenticated || !userId) return next(new UnauthorizedError('User not authenticated'));
+
+      return next();
+    } catch (err) {
+      next(new UnauthorizedError('Authentication failed'));
+    }
+  };
+}
+
 @injectable()
 export class RequireRolesMiddleware {
   constructor(private userService: UserService) {}

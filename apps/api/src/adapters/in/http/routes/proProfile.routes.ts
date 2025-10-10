@@ -4,6 +4,7 @@ import { $Enums } from '@prisma/client';
 import { container } from 'tsyringe';
 import { ProProfileController } from '@/adapters/in/http/controllers/ProProfileController';
 import { RequireRolesMiddleware } from '../middleware/auth';
+import { endpoints, getRelativePath, BASE_PATH as PRO_PROFILES_BASE_PATH } from '@repo/endpoints';
 
 const router: ExpressRouter = Router();
 const proProfileController = container.resolve(ProProfileController);
@@ -18,8 +19,10 @@ const requireRolesMiddleware = container.resolve(RequireRolesMiddleware);
  * @desc    Create a new professional profile
  * @access  Private (authenticated user)
  */
-router.post('/', requireRolesMiddleware.handle($Enums.UserRole.CLIENT), (req, res) =>
-  proProfileController.createProProfile(req, res),
+router.post(
+  getRelativePath(endpoints.proProfiles.create.path, PRO_PROFILES_BASE_PATH),
+  requireRolesMiddleware.handle($Enums.UserRole.CLIENT),
+  (req, res) => proProfileController.createProProfile(req, res),
 );
 
 /**

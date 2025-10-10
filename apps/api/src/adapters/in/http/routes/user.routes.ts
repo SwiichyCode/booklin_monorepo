@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import type { Router as ExpressRouter } from 'express';
-import { container } from '../../../../shared/di/container';
-import { UserController } from '../controllers/UserController';
+import { container } from '@/shared/di/container';
+import { UserController } from '@/adapters/in/http/controllers/UserController';
 import { endpoints, getRelativePath, BASE_PATH as USERS_BASE_PATH } from '@repo/endpoints';
+import { RequireAuthMiddleware } from '../middleware/auth';
 
 const router: ExpressRouter = Router();
 const userController = container.resolve(UserController);
@@ -16,7 +17,7 @@ const userController = container.resolve(UserController);
  * @desc    Create a new user
  * @access  Private (authenticated user)
  */
-router.post(getRelativePath(endpoints.users.create.path, USERS_BASE_PATH), (req, res) =>
+router.post(getRelativePath(endpoints.users.create.path, USERS_BASE_PATH), RequireAuthMiddleware(), (req, res) =>
   userController.createUser(req, res),
 );
 
