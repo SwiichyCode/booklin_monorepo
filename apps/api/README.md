@@ -16,13 +16,23 @@ src/
 ```
 
 📚 **Documentation détaillée** :
-- [Architecture Hexagonale](./documentation/architecture/HEXAGONAL_ARCHITECTURE.md) - Structure et patterns
-- [Architecture Summary](./documentation/architecture/ARCHITECTURE_SUMMARY.md) - Résumé visuel
-- [Configuration](./documentation/CONFIGURATION.md) - Variables d'env, CORS, middlewares
-- [Validation Guide](./documentation/VALIDATION_GUIDE.md) - HTTP validation avec Zod
-- [Path Aliases Guide](./documentation/PATH_ALIASES_GUIDE.md) - Using @/ imports
-- [Prisma Location Guide](./documentation/PRISMA_LOCATION_GUIDE.md) - Prisma in hexagonal architecture
-- [Migration Complete](./documentation/MIGRATION_COMPLETE.md) - Migration summary
+
+> **La documentation complète est maintenant centralisée dans le dossier `/docs`**
+>
+> - 🇬🇧 [English Documentation](../../docs/en/api/README.md)
+> - 🇫🇷 [Documentation Française](../../docs/fr/api/README.md)
+
+**Guides principaux** :
+- [Architecture Hexagonale](../../docs/fr/api/architecture/architecture-hexagonale.md) - Structure et patterns
+- [Résumé Architecture](../../docs/fr/api/architecture/resume-architecture.md) - Résumé visuel
+- [Configuration](../../docs/fr/api/guides/configuration.md) - Variables d'env, CORS, middlewares
+- [Validation](../../docs/fr/api/guides/validation.md) - HTTP validation avec Zod
+- [Alias de chemins](../../docs/fr/api/guides/alias-chemins.md) - Imports @/
+- [Emplacement Prisma](../../docs/fr/api/guides/emplacement-prisma.md) - Prisma dans l'architecture hexagonale
+
+**Migrations** :
+- [Module User](../../docs/fr/api/migrations/module-user.md) - Migration vers hexagonal
+- [Module ProProfile](../../docs/fr/api/migrations/module-proprofile.md) - Migration ProProfile
 
 ## 🚀 Démarrage rapide
 

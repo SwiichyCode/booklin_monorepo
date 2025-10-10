@@ -1,5 +1,7 @@
 # @repo/endpoints
 
+> **📖 Documentation complète** : [🇬🇧 English](../../docs/en/packages/endpoints/README.md) | [🇫🇷 Français](../../docs/fr/packages/endpoints/README.md)
+
 Package centralisé pour tous les endpoints API de Booklin. Ce package permet de garantir la cohérence entre le backend (Express) et le frontend (Next.js) en définissant une seule source de vérité pour toutes les routes API.
 
 ## Installation

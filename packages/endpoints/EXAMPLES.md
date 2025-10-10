@@ -1,5 +1,7 @@
 # Exemples d'utilisation de @repo/endpoints
 
+> **📖 Documentation complète** : [🇬🇧 English](../../docs/en/packages/endpoints/examples.md) | [🇫🇷 Français](../../docs/fr/packages/endpoints/exemples.md)
+
 ## Exemple Backend (Express)
 
 ### Utilisation dans les routes
