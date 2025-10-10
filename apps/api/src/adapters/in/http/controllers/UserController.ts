@@ -26,7 +26,7 @@ export class UserController {
 
   async createUser(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des données entrantes
+      // Validate incoming data
       const validatedData = createUserSchema.parse(req.body);
 
       const user = await this.createUserUseCase.execute(validatedData);
@@ -38,7 +38,7 @@ export class UserController {
 
   async updateUser(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des paramètres et du body
+      // Validate parameters and body
       const { clerkId } = clerkIdParamSchema.parse(req.params);
       const validatedData = updateUserSchema.parse(req.body);
 
@@ -54,7 +54,7 @@ export class UserController {
 
   async deleteUser(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des paramètres
+      // Validate parameters
       const { clerkId } = clerkIdParamSchema.parse(req.params);
 
       const user = await this.deleteUserUseCase.execute({ clerkId });
@@ -66,7 +66,7 @@ export class UserController {
 
   async getUserByClerkId(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des paramètres
+      // Validate parameters
       const { clerkId } = clerkIdParamSchema.parse(req.params);
 
       const user = await this.getUserUseCase.getByClerkId({ clerkId });
@@ -84,7 +84,7 @@ export class UserController {
 
   async getUserById(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des paramètres
+      // Validate parameters
       const { id } = idParamSchema.parse(req.params);
 
       const user = await this.getUserUseCase.getById({ id });
@@ -102,7 +102,7 @@ export class UserController {
 
   async getUserByEmail(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des paramètres
+      // Validate parameters
       const { email } = emailParamSchema.parse(req.params);
 
       const user = await this.getUserUseCase.getByEmail({ email });
@@ -120,7 +120,7 @@ export class UserController {
 
   async getUsers(req: Request, res: Response): Promise<void> {
     try {
-      // Validation des query params
+      // Validate query params
       const validatedQuery = getUsersQuerySchema.parse(req.query);
 
       const users = await this.getUserUseCase.getMany({ filter: validatedQuery });
@@ -133,7 +133,7 @@ export class UserController {
     }
   }
 
-  // Mapper Domain -> DTO (pour exposer à l'API)
+  // Map Domain -> DTO (to expose to API)
   private toDTO(user: any) {
     return {
       id: user.id,
@@ -150,7 +150,7 @@ export class UserController {
   }
 
   private handleError(error: unknown, res: Response): void {
-    // Gestion des erreurs de validation Zod
+    // Handle Zod validation errors
     if (error instanceof ZodError) {
       const formattedErrors = error.issues.map((err: any) => ({
         field: err.path.join('.'),
@@ -164,19 +164,19 @@ export class UserController {
       return;
     }
 
-    // Gestion des erreurs du domaine
+    // Handle domain errors
     if (error instanceof DomainError) {
       res.status(400).json({ success: false, error: error.message });
       return;
     }
 
-    // Gestion des erreurs génériques
+    // Handle generic errors
     if (error instanceof Error) {
       res.status(500).json({ success: false, error: error.message });
       return;
     }
 
-    // Erreur inconnue
+    // Unknown error
     res.status(500).json({ success: false, error: 'Unknown error' });
   }
 }

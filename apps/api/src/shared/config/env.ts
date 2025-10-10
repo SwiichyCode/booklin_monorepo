@@ -1,6 +1,6 @@
 /**
- * Configuration des variables d'environnement
- * Centralisée pour toute l'application
+ * Environment variables configuration
+ * Centralized for the entire application
  */
 
 export interface EnvConfig {

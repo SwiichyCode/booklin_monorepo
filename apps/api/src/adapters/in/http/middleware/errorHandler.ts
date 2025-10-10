@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import { DomainError, ValidationError, NotFoundError } from '../../../../core/domain/errors/DomainError';
-import { envConfig } from '../../../../shared/config/env';
+import { DomainError, ValidationError, NotFoundError } from '@/core/domain/errors/DomainError';
+import { envConfig } from '@/shared/config/env';
 
 /**
  * Interface pour les erreurs standardisées
@@ -19,12 +19,7 @@ interface ErrorResponse {
  * Middleware global de gestion des erreurs
  * Convertit les erreurs du domaine en réponses HTTP appropriées
  */
-export function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
+export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
   // Log l'erreur (en production, utiliser un logger comme Winston)
   console.error('[Error Handler]', {
     name: err.name,
@@ -104,9 +99,7 @@ export function errorHandler(
   const response: ErrorResponse = {
     success: false,
     error: {
-      message: envConfig.isProduction()
-        ? 'An unexpected error occurred'
-        : err.message,
+      message: envConfig.isProduction() ? 'An unexpected error occurred' : err.message,
       code: 'INTERNAL_SERVER_ERROR',
       // En développement, inclure la stack trace
       ...(envConfig.isDevelopment() && { stack: err.stack }),
@@ -119,11 +112,7 @@ export function errorHandler(
 /**
  * Middleware pour gérer les routes non trouvées (404)
  */
-export function notFoundHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
+export function notFoundHandler(req: Request, res: Response, next: NextFunction): void {
   const response: ErrorResponse = {
     success: false,
     error: {

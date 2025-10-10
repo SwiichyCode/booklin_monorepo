@@ -1,11 +1,11 @@
 // Extend Express Request type
 
-import { User } from '@prisma/client';
+import type { $Enums } from '@prisma/client';
 
 declare global {
   namespace Express {
     interface Request {
-      user?: User;
+      user?: { id: string; role: $Enums.UserRole };
       auth?: {
         userId: string;
         sessionId: string;

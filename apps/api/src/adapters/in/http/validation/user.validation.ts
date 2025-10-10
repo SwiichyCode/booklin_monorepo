@@ -1,15 +1,15 @@
 /**
  * User Validation Schemas
  *
- * Schemas Zod pour valider les données entrantes des requêtes HTTP.
- * Ces validations sont la première ligne de défense contre les données invalides.
+ * Zod schemas to validate incoming HTTP request data.
+ * These validations are the first line of defense against invalid data.
  */
 
 import { z } from 'zod';
 import { UserRole } from '@/core/domain/entities/User';
 
 /**
- * Schema pour la création d'un utilisateur
+ * Schema for user creation
  */
 export const createUserSchema = z.object({
   clerkId: z.string().min(1, 'ClerkId is required'),
@@ -22,7 +22,7 @@ export const createUserSchema = z.object({
 });
 
 /**
- * Schema pour la mise à jour d'un utilisateur
+ * Schema for user update
  */
 export const updateUserSchema = z.object({
   email: z.string().email('Invalid email format').nullable().optional(),
@@ -34,35 +34,35 @@ export const updateUserSchema = z.object({
 });
 
 /**
- * Schema pour les paramètres ClerkId
+ * Schema for ClerkId parameters
  */
 export const clerkIdParamSchema = z.object({
   clerkId: z.string().min(1, 'ClerkId is required'),
 });
 
 /**
- * Schema pour les paramètres ID
+ * Schema for ID parameters
  */
 export const idParamSchema = z.object({
   id: z.string().uuid('ID must be a valid UUID'),
 });
 
 /**
- * Schema pour les paramètres Email
+ * Schema for Email parameters
  */
 export const emailParamSchema = z.object({
   email: z.string().email('Invalid email format'),
 });
 
 /**
- * Schema pour les query params de filtrage
+ * Schema for filtering query params
  */
 export const getUsersQuerySchema = z.object({
   role: z.nativeEnum(UserRole).optional(),
   email: z.string().email().optional(),
 });
 
-// Types inférés depuis les schemas
+// Types inferred from schemas
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type ClerkIdParam = z.infer<typeof clerkIdParamSchema>;

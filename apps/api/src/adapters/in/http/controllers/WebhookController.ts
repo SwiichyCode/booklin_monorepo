@@ -1,8 +1,8 @@
 /**
  * WebhookController
  *
- * Adaptateur HTTP pour les webhooks.
- * Transforme les requêtes HTTP en commandes du domaine.
+ * HTTP adapter for webhooks.
+ * Transforms HTTP requests into domain commands.
  */
 
 import { injectable, inject } from 'tsyringe';
@@ -16,7 +16,7 @@ export class WebhookController {
 
   async handleClerkWebhook(req: Request, res: Response): Promise<void> {
     try {
-      // Le middleware a déjà vérifié et attaché l'event
+      // The middleware has already verified and attached the event
       const event = (req as any).webhookEvent as WebhookEvent;
 
       if (!event) {
@@ -27,7 +27,7 @@ export class WebhookController {
         return;
       }
 
-      // Traiter l'événement via le use case
+      // Process the event via the use case
       await this.processWebhookUseCase.execute({
         eventId: event.id,
         eventType: event.type,

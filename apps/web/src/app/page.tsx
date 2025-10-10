@@ -1,3 +1,4 @@
+import { ButtonSessionToken } from '@/components/shared/button-session-token';
 import { UserButton } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
@@ -43,7 +44,7 @@ export default async function Home() {
           </a>
 
           <UserButton />
-          {/* {sessionToken} */}
+          {sessionToken && <ButtonSessionToken sessionToken={sessionToken} />}
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

@@ -83,7 +83,7 @@ export const successResponse = <T>(data: T, message?: string): ApiSuccessRespons
 export const errorResponse = (
   message: string,
   code?: string,
-  details?: Record<string, string[]>
+  details?: Record<string, string[]>,
 ): ApiErrorResponse => ({
   success: false,
   error: {

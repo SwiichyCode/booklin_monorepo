@@ -27,6 +27,7 @@ import { VerifyWebhookUseCase } from '@/core/ports/in/VerifyWebhookUseCase';
 
 // ProProfile Services
 import { ProProfileService } from '@/core/services/ProProfileService';
+import { RequireRolesMiddleware } from '@/adapters/in/http/middleware/auth';
 
 export function setupContainer(): void {
   // Infrastructure - PrismaClient (singleton)
@@ -34,6 +35,9 @@ export function setupContainer(): void {
   container.register('PrismaClient', {
     useValue: prismaClient,
   });
+
+  // Middleware (singleton)
+  container.registerSingleton(RequireRolesMiddleware);
 
   // Repositories (singleton pour réutilisation connexion DB)
   container.register<UserRepository>('UserRepository', {
@@ -128,7 +132,7 @@ export function setupContainer(): void {
 
   // ProProfile Use Cases
   container.register('CreateProProfileUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         execute: (command: any) => service.createProProfile(command),
@@ -137,7 +141,7 @@ export function setupContainer(): void {
   });
 
   container.register('UpdateProProfileUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         execute: (command: any) => service.updateProProfile(command),
@@ -146,7 +150,7 @@ export function setupContainer(): void {
   });
 
   container.register('DeleteProProfileUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         execute: (command: any) => service.deleteProProfile(command),
@@ -155,11 +159,11 @@ export function setupContainer(): void {
   });
 
   container.register('GetProProfileUseCase', {
-    useFactory: (c) => c.resolve('ProProfileServiceInstance'),
+    useFactory: c => c.resolve('ProProfileServiceInstance'),
   });
 
   container.register('ApproveProProfileUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         execute: (command: any) => service.approveProProfile(command),
@@ -168,7 +172,7 @@ export function setupContainer(): void {
   });
 
   container.register('RejectProProfileUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         execute: (command: any) => service.rejectProProfile(command),
@@ -177,7 +181,7 @@ export function setupContainer(): void {
   });
 
   container.register('ManagePremiumUseCase', {
-    useFactory: (c) => {
+    useFactory: c => {
       const service = c.resolve<ProProfileService>('ProProfileServiceInstance');
       return {
         activatePremium: (command: any) => service.activatePremium(command),

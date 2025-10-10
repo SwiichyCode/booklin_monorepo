@@ -1,5 +1,6 @@
-import 'reflect-metadata'; // IMPORTANT: doit être en premier !
+import 'reflect-metadata'; // IMPORTANT: must be first!
 import express from 'express';
+import { clerkClient, clerkMiddleware, getAuth } from '@clerk/express';
 import type { Express } from 'express';
 
 // Configuration
@@ -8,20 +9,21 @@ import { corsMiddleware } from './adapters/in/http/config/cors.config';
 import { requestLogger } from './adapters/in/http/middleware/logger';
 import { errorHandler, notFoundHandler } from './adapters/in/http/middleware/errorHandler';
 
-// Setup Dependency Injection AVANT d'importer les routes
+// Setup Dependency Injection BEFORE importing routes
 setupContainer();
 
-// Routes (importées APRÈS setupContainer)
+// Routes (imported AFTER setupContainer)
 import routes from '@/adapters/in/http/routes';
 
 export const createApp = (): Express => {
   const app = express();
 
-  // Middlewares globaux
-  app.use(corsMiddleware); // CORS configuré
+  // Global middlewares
+  app.use(corsMiddleware); // CORS configured
   app.use(express.json()); // Parse JSON body
   app.use(express.urlencoded({ extended: true })); // Parse URL-encoded body
-  app.use(requestLogger); // Logger des requêtes
+  app.use(requestLogger); // Request logger
+  app.use(clerkMiddleware()); // Clerk middleware
 
   // Health check endpoint
   app.get('/health', (req, res) => {
@@ -32,12 +34,12 @@ export const createApp = (): Express => {
     });
   });
 
-  // Routes de l'API
+  // API routes
   app.use('/api', routes);
 
-  // Middleware de gestion des erreurs (doit être APRÈS les routes)
+  // Error handling middleware (must be AFTER routes)
   app.use(notFoundHandler); // 404
-  app.use(errorHandler); // Erreurs globales
+  app.use(errorHandler); // Global errors
 
   return app;
 };

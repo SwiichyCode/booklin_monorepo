@@ -1,14 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
-import { envConfig } from '../../../../shared/config/env';
+import { envConfig } from '@/shared/config/env';
 
 /**
  * Middleware de logging des requêtes HTTP
  */
-export function requestLogger(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
+export function requestLogger(req: Request, res: Response, next: NextFunction): void {
   const start = Date.now();
 
   // Log après la réponse
@@ -28,9 +24,7 @@ export function requestLogger(
     const emoji = getStatusEmoji(res.statusCode);
 
     if (envConfig.isDevelopment()) {
-      console.log(
-        `${emoji} ${color}${req.method}${reset} ${req.path} - ${res.statusCode} (${duration}ms)`
-      );
+      console.log(`${emoji} ${color}${req.method}${reset} ${req.path} - ${res.statusCode} (${duration}ms)`);
     } else {
       // En production, logger en JSON pour parsing facile
       console.log(JSON.stringify(logData));

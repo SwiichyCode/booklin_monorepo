@@ -1,18 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)",
-      "Bash(pnpm add:*)",
-      "Bash(pnpm tsc:*)",
-      "Bash(cat:*)",
-      "Bash(pnpm prisma migrate dev:*)",
-      "Bash(pnpm --filter=api add tsyringe reflect-metadata)",
-      "Bash(pnpm:*)",
-      "Bash(npx tsc:*)",
-      "Bash(git add:*)",
-      "Bash(git push:*)",
-      "Bash(timeout 10 pnpm dev)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nfix(api): fix DI container initialization order and old config imports\n\nThis commit resolves runtime dependency injection errors caused by:\n1. Routes being imported before DI container setup\n2. Old middleware files referencing deprecated config paths\n\nChanges:\n- Move setupContainer() call before route imports in app.ts\n- Update errorHandler.ts to use new shared/config/env path\n- Update logger.ts to use new shared/config/env path\n- Add logLevel to EnvConfig interface and implementation\n- Update .env.example with LOG_LEVEL variable\n- Remove old config files (config/env.ts, config/cors.ts)\n\nThis fixes the \"Attempted to resolve unregistered dependency token\" error\nand ensures proper DI container initialization before route registration.\n\nTested: Server starts successfully and health endpoint responds correctly.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []

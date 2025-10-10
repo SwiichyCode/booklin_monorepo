@@ -7,8 +7,8 @@
 
 import type { Request, Response, NextFunction } from 'express';
 import { container } from 'tsyringe';
-import type { VerifyWebhookUseCase } from '../../../../core/ports/in/VerifyWebhookUseCase';
-import { envConfig } from '../../../../shared/config/env';
+import type { VerifyWebhookUseCase } from '@/core/ports/in/VerifyWebhookUseCase';
+import { envConfig } from '@/shared/config/env';
 
 export const verifyClerkWebhook = async (req: Request, res: Response, next: NextFunction) => {
   try {
