@@ -4,7 +4,7 @@
 
 import { createEndpoint } from '../lib/types';
 
-const BASE_PATH = '/pro-profiles';
+const BASE_PATH = '/';
 
 export const proProfileEndpoints = {
   // ========================================

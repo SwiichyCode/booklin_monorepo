@@ -94,9 +94,9 @@ export class ProProfileController {
 
   async getProProfileById(req: Request, res: Response): Promise<void> {
     try {
-      const id = req.params.id as string;
+      const userId = req.params.id as string;
 
-      const proProfile = await this.proProfileService.findById(id);
+      const proProfile = await this.proProfileService.findByUserId(userId);
 
       if (!proProfile) {
         res.status(404).json({
@@ -120,47 +120,6 @@ export class ProProfileController {
       const userId = req.params.userId as string;
 
       const proProfile = await this.proProfileService.findByUserId(userId);
-
-      if (!proProfile) {
-        res.status(404).json({
-          success: false,
-          error: 'ProProfile not found',
-        });
-        return;
-      }
-
-      res.status(200).json({
-        success: true,
-        data: this.toDTO(proProfile),
-      });
-    } catch (error) {
-      this.handleError(error, res);
-    }
-  }
-
-  async getProProfileByClerkId(req: Request, res: Response): Promise<void> {
-    try {
-      const userId = req.params.userId as string;
-
-      const user = await this.userService.getByClerkId({ clerkId: userId });
-
-      if (!user) {
-        res.status(404).json({
-          success: false,
-          error: 'User not found',
-        });
-        return;
-      }
-
-      const proProfile = await this.proProfileService.findByUserId(user.id);
-
-      if (!proProfile) {
-        res.status(404).json({
-          success: false,
-          error: 'ProProfile not found',
-        });
-        return;
-      }
 
       res.status(200).json({
         success: true,
@@ -298,7 +257,9 @@ export class ProProfileController {
   // HELPERS
   // ========================================
 
-  private toDTO(proProfile: ProProfile) {
+  private toDTO(proProfile: ProProfile | null) {
+    if (!proProfile) return null;
+
     return {
       id: proProfile.id,
       userId: proProfile.userId,

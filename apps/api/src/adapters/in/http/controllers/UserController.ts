@@ -21,7 +21,7 @@ export class UserController {
     @inject('CreateUserUseCase') private createUserUseCase: CreateUserUseCase,
     @inject('UpdateUserUseCase') private updateUserUseCase: UpdateUserUseCase,
     @inject('DeleteUserUseCase') private deleteUserUseCase: DeleteUserUseCase,
-    @inject('GetUserUseCase') private getUserUseCase: GetUserUseCase
+    @inject('GetUserUseCase') private getUserUseCase: GetUserUseCase,
   ) {}
 
   async createUser(req: Request, res: Response): Promise<void> {
@@ -126,7 +126,7 @@ export class UserController {
       const users = await this.getUserUseCase.getMany({ filter: validatedQuery });
       res.status(200).json({
         success: true,
-        data: users.map((user) => this.toDTO(user)),
+        data: users.map(user => this.toDTO(user)),
       });
     } catch (error) {
       this.handleError(error, res);

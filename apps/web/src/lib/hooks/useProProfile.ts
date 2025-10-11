@@ -16,6 +16,11 @@ export function useProProfile() {
     queryKey: ['proProfile', 'user', user?.id],
     queryFn: () => {
       if (!user?.id) throw new Error('User not authenticated');
+
+      // Vérifier que l'utilisateur a bien commencer a créer un profil
+      // Créer une nouvelle key dans le model User : onBoardingStarted
+      // Si onBoardingStarted n'existe pas, on return null pour éviter de créer une erreur
+
       return proProfileService.getMyProfile(user.id);
     },
     retry: false,

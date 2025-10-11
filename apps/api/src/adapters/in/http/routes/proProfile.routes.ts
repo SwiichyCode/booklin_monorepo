@@ -48,12 +48,11 @@ router.get('/:id', (req, res) => proProfileController.getProProfileById(req, res
 
 /**
  * @route   GET /api/pro-profiles/user/:userId
- * @desc    Get professional profile by user ID
- * @access  Public
+ * @desc    Get professional profile by user ID (Clerk ID)
+ * @access  Authenticated
  */
-
 router.get('/user/:userId', RequireAuthMiddleware(), (req, res) =>
-  proProfileController.getProProfileByClerkId(req, res),
+  proProfileController.getProProfileByUserId(req, res),
 );
 
 /**

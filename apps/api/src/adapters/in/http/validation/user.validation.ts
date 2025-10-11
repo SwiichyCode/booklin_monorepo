@@ -12,7 +12,7 @@ import { UserRole } from '@/core/domain/entities/User';
  * Schema for user creation
  */
 export const createUserSchema = z.object({
-  clerkId: z.string().min(1, 'ClerkId is required'),
+  id: z.string().min(1, 'Id is required'),
   email: z.string().email('Invalid email format').nullable(),
   role: z.nativeEnum(UserRole, {
     message: 'Role must be either CLIENT or PRO',
