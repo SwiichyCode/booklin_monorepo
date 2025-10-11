@@ -6,7 +6,6 @@ export class UserMapper {
   static toDomain(prismaUser: PrismaUser): User {
     return User.fromPersistence({
       id: prismaUser.id,
-      clerkId: prismaUser.clerkId,
       email: prismaUser.email ? new Email(prismaUser.email) : null,
       role: this.mapRole(prismaUser.role),
       firstName: prismaUser.firstName,
@@ -21,7 +20,6 @@ export class UserMapper {
   static toPersistence(user: User): Omit<PrismaUser, 'createdAt' | 'updatedAt'> {
     return {
       id: user.id,
-      clerkId: user.clerkId,
       email: user.email?.toString() ?? null,
       role: this.mapRoleToPrisma(user.role),
       firstName: user.firstName,
@@ -33,7 +31,7 @@ export class UserMapper {
 
   static toCreateData(user: User) {
     return {
-      clerkId: user.clerkId,
+      id: user.id,
       email: user.email?.toString() ?? null,
       role: this.mapRoleToPrisma(user.role),
       firstName: user.firstName,

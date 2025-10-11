@@ -1,7 +1,7 @@
 import { User } from '../../domain/entities/User';
 
 export interface DeleteUserCommand {
-  clerkId: string;
+  id: string;
 }
 
 export interface DeleteUserUseCase {

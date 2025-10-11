@@ -1,7 +1,7 @@
 import { User, UserRole } from '../../domain/entities/User';
 
 export interface UpdateUserCommand {
-  clerkId: string;
+  id: string;
   email?: string | null;
   firstName?: string | null;
   lastName?: string | null;

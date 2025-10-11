@@ -26,17 +26,17 @@ enum BookingStatus {
 }
 
 enum OnboardingStep {
-  ENTERPRISE_INFO      // Étape 1
-  PROFESSIONAL_INFO    // Étape 2
-  LOCATION            // Étape 3
-  MEDIA               // Étape 4
-  COMPLETED           // Étape 5
+  ENTERPRISE_INFO // Étape 1
+  PROFESSIONAL_INFO // Étape 2
+  LOCATION // Étape 3
+  MEDIA // Étape 4
+  COMPLETED // Étape 5
 }
 
 enum ValidationStatus {
-  PENDING    // En attente validation
-  APPROVED   // Approuvé
-  REJECTED   // Rejeté
+  PENDING // En attente validation
+  APPROVED // Approuvé
+  REJECTED // Rejeté
 }
 
 // ========================================
@@ -44,9 +44,8 @@ enum ValidationStatus {
 // ========================================
 
 model User {
-  id        String   @id @default(uuid())
-  clerkId   String   @unique
-  email     String?   
+  id        String   @id
+  email     String?
   role      UserRole
   firstName String?
   lastName  String?
@@ -65,26 +64,26 @@ model User {
 }
 
 model ProProfile {
-  id           String    @id @default(uuid())
-  userId       String    @unique
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   businessName   String?
-  bio            String?   @db.Text
-  profession     String?   // "Coiffeur", "Barbier", "Masseur", etc.
+  bio            String?  @db.Text
+  profession     String? // "Coiffeur", "Barbier", "Masseur", etc.
   experience     Int?
   certifications String[]
- 
+
   // Localisation
-  address      String?
-  postalCode   String?
-  city         String?
-  latitude     Float?
-  longitude    Float?
-  radius       Int       @default(5) // km
+  address    String?
+  postalCode String?
+  city       String?
+  latitude   Float?
+  longitude  Float?
+  radius     Int     @default(5) // km
 
   // Business Info
-  siret         String?   @unique
+  siret         String? @unique
   corporateName String?
   legalForm     String?
   legalStatus   String?
@@ -97,21 +96,21 @@ model ProProfile {
   // Validation & Status
   validationStatus ValidationStatus @default(PENDING)
   rejectionReason  String?
-  isActive         Boolean          @default(true)  
-  
+  isActive         Boolean          @default(true)
+
   // Media
-  photos       String[]  // Array of URLs
-  
+  photos String[] // Array of URLs
+
   // Premium
   isPremium       Boolean   @default(false)
   subscriptionEnd DateTime?
-  
+
   // Stats
-  rating       Float?    @default(0)
-  reviewCount  Int       @default(0)
-  
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  rating      Float? @default(0)
+  reviewCount Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   services       Service[]
@@ -123,119 +122,119 @@ model ProProfile {
 }
 
 model Service {
-  id          String   @id @default(uuid())
-  proId       String
-  pro         ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
-  
+  id    String     @id @default(uuid())
+  proId String
+  pro   ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
+
   name        String
-  description String?  @db.Text
-  price       Float    // En euros
-  duration    Int      // En minutes
-  isActive    Boolean  @default(true)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description String? @db.Text
+  price       Float // En euros
+  duration    Int // En minutes
+  isActive    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  bookings    Booking[]
+  bookings Booking[]
 
   @@map("services")
 }
 
 model Availability {
-  id        String     @id @default(uuid())
-  proId     String
-  pro       ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
-  
-  dayOfWeek Int        // 0 = Dimanche, 6 = Samedi
-  startTime String     // Format "09:00"
-  endTime   String     // Format "18:00"
-  
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id    String     @id @default(uuid())
+  proId String
+  pro   ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
+
+  dayOfWeek Int // 0 = Dimanche, 6 = Samedi
+  startTime String // Format "09:00"
+  endTime   String // Format "18:00"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([proId, dayOfWeek])
   @@map("availabilities")
 }
 
 model Booking {
-  id            String        @id @default(uuid())
-  
-  clientId      String
-  client        User          @relation("ClientBookings", fields: [clientId], references: [id])
-  
-  proId         String
-  pro           ProProfile    @relation(fields: [proId], references: [id])
-  
-  serviceId     String
-  service       Service       @relation(fields: [serviceId], references: [id])
-  
-  date          DateTime      // Date de la prestation
-  startTime     String        // Format "14:00"
-  endTime       String        // Format "15:30"
-  
-  status        BookingStatus @default(PENDING)
-  
-  clientMessage String?       @db.Text // Message initial du client
-  
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id String @id @default(uuid())
+
+  clientId String
+  client   User   @relation("ClientBookings", fields: [clientId], references: [id])
+
+  proId String
+  pro   ProProfile @relation(fields: [proId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  date      DateTime // Date de la prestation
+  startTime String // Format "14:00"
+  endTime   String // Format "15:30"
+
+  status BookingStatus @default(PENDING)
+
+  clientMessage String? @db.Text // Message initial du client
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  review        Review?
+  review Review?
 
   @@map("bookings")
 }
 
 model Review {
-  id        String   @id @default(uuid())
-  
-  bookingId String   @unique
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  
-  clientId  String
-  client    User     @relation(fields: [clientId], references: [id])
-  
-  proId     String
-  pro       ProProfile @relation(fields: [proId], references: [id])
-  
-  rating    Int      // 1-5
-  comment   String?  @db.Text
-  
+  id String @id @default(uuid())
+
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  clientId String
+  client   User   @relation(fields: [clientId], references: [id])
+
+  proId String
+  pro   ProProfile @relation(fields: [proId], references: [id])
+
+  rating  Int // 1-5
+  comment String? @db.Text
+
   createdAt DateTime @default(now())
 
   @@map("reviews")
 }
 
 model Conversation {
-  id        String    @id @default(uuid())
-  
-  clientId  String
-  proId     String
-  
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id String @id @default(uuid())
+
+  clientId String
+  proId    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  messages  Message[]
+  messages Message[]
 
   @@unique([clientId, proId])
   @@map("conversations")
 }
 
 model Message {
-  id             String       @id @default(uuid())
-  
-  senderId       String
-  sender         User         @relation("SentMessages", fields: [senderId], references: [id])
-  
+  id String @id @default(uuid())
+
+  senderId String
+  sender   User   @relation("SentMessages", fields: [senderId], references: [id])
+
   conversationId String
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  
-  content        String       @db.Text
-  read           Boolean      @default(false)
-  
-  createdAt      DateTime     @default(now())
+
+  content String  @db.Text
+  read    Boolean @default(false)
+
+  createdAt DateTime @default(now())
 
   @@map("messages")
 }

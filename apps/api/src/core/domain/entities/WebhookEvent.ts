@@ -54,7 +54,7 @@ export class WebhookEvent {
 
   // Logique métier : extraction des données utilisateur Clerk
   extractClerkUserData(): {
-    clerkId: string;
+    id: string;
     email: string | null;
     firstName: string | null;
     lastName: string | null;
@@ -62,7 +62,7 @@ export class WebhookEvent {
     const data = this.props.data;
 
     return {
-      clerkId: data.id,
+      id: data.id,
       email: data.email_addresses?.[0]?.email_address || null,
       firstName: data.first_name || null,
       lastName: data.last_name || null,

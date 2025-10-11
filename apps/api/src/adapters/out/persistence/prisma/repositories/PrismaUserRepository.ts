@@ -14,27 +14,20 @@ export class PrismaUserRepository implements UserRepository {
     return UserMapper.toDomain(created);
   }
 
-  async update(clerkId: string, user: User): Promise<User> {
+  async update(id: string, user: User): Promise<User> {
     const data = UserMapper.toUpdateData(user);
     const updated = await this.prisma.user.update({
-      where: { clerkId },
+      where: { id },
       data,
     });
     return UserMapper.toDomain(updated);
   }
 
-  async delete(clerkId: string): Promise<User> {
+  async delete(id: string): Promise<User> {
     const deleted = await this.prisma.user.delete({
-      where: { clerkId },
+      where: { id },
     });
     return UserMapper.toDomain(deleted);
-  }
-
-  async findByClerkId(clerkId: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
-      where: { clerkId },
-    });
-    return user ? UserMapper.toDomain(user) : null;
   }
 
   async findById(id: string): Promise<User | null> {
@@ -56,7 +49,6 @@ export class PrismaUserRepository implements UserRepository {
       where: filter
         ? {
             id: filter.id,
-            clerkId: filter.clerkId,
             email: filter.email?.toLowerCase(),
             role: filter.role,
           }

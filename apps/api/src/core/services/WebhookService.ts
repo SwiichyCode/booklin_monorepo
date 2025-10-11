@@ -6,8 +6,8 @@
  */
 
 import { injectable, inject } from 'tsyringe';
-import type { ProcessWebhookCommand, ProcessWebhookUseCase } from '../ports/in/ProcessWebhookUseCase';
-import type { VerifyWebhookCommand, VerifyWebhookUseCase } from '../ports/in/VerifyWebhookUseCase';
+import type { ProcessWebhookCommand } from '../ports/in/ProcessWebhookUseCase';
+import type { VerifyWebhookCommand } from '../ports/in/VerifyWebhookUseCase';
 import { WebhookEvent, type WebhookEventType } from '../domain/entities/WebhookEvent';
 import { Webhook, type WebhookRequiredHeaders } from 'svix';
 import { ValidationError } from '../domain/errors/DomainError';
@@ -89,26 +89,26 @@ export class WebhookService {
         break;
 
       case 'user.deleted':
-        await this.handleUserDeleted(userData.clerkId);
+        await this.handleUserDeleted(userData.id);
         break;
     }
   }
 
   private async handleUserCreated(userData: {
-    clerkId: string;
+    id: string;
     email: string | null;
     firstName: string | null;
     lastName: string | null;
   }): Promise<void> {
     try {
       await this.userService.createUser({
-        clerkId: userData.clerkId,
+        id: userData.id,
         email: userData.email,
         role: UserRole.CLIENT,
         firstName: userData.firstName,
         lastName: userData.lastName,
       });
-      console.info(`[Webhook Service] User created: ${userData.clerkId}`);
+      console.info(`[Webhook Service] User created: ${userData.id}`);
     } catch (error) {
       console.error('[Webhook Service] Error creating user:', error);
       throw error;
@@ -116,29 +116,29 @@ export class WebhookService {
   }
 
   private async handleUserUpdated(userData: {
-    clerkId: string;
+    id: string;
     email: string | null;
     firstName: string | null;
     lastName: string | null;
   }): Promise<void> {
     try {
       await this.userService.updateUser({
-        clerkId: userData.clerkId,
+        id: userData.id,
         email: userData.email,
         firstName: userData.firstName,
         lastName: userData.lastName,
       });
-      console.info(`[Webhook Service] User updated: ${userData.clerkId}`);
+      console.info(`[Webhook Service] User updated: ${userData.id}`);
     } catch (error) {
       console.error('[Webhook Service] Error updating user:', error);
       throw error;
     }
   }
 
-  private async handleUserDeleted(clerkId: string): Promise<void> {
+  private async handleUserDeleted(id: string): Promise<void> {
     try {
-      await this.userService.deleteUser({ clerkId });
-      console.info(`[Webhook Service] User deleted: ${clerkId}`);
+      await this.userService.deleteUser({ id });
+      console.info(`[Webhook Service] User deleted: ${id}`);
     } catch (error) {
       console.error('[Webhook Service] Error deleting user:', error);
       throw error;

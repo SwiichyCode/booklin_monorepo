@@ -20,7 +20,7 @@ export class UserService implements GetUserUseCase {
   // CreateUserUseCase
   async createUser(command: CreateUserCommand): Promise<User> {
     const user = User.create({
-      clerkId: command.clerkId,
+      id: command.id,
       email: command.email,
       role: command.role,
       firstName: command.firstName,
@@ -32,10 +32,10 @@ export class UserService implements GetUserUseCase {
 
   // UpdateUserUseCase
   async updateUser(command: UpdateUserCommand): Promise<User> {
-    const existingUser = await this.userRepository.findByClerkId(command.clerkId);
+    const existingUser = await this.userRepository.findById(command.id);
 
     if (!existingUser) {
-      throw new NotFoundError('User', command.clerkId);
+      throw new NotFoundError('User', command.id);
     }
 
     // Mise à jour via méthodes métier
@@ -54,18 +54,18 @@ export class UserService implements GetUserUseCase {
       existingUser.changeRole(command.role);
     }
 
-    return await this.userRepository.update(command.clerkId, existingUser);
+    return await this.userRepository.update(command.id, existingUser);
   }
 
   // DeleteUserUseCase
   async deleteUser(command: DeleteUserCommand): Promise<User> {
-    const existingUser = await this.userRepository.findByClerkId(command.clerkId);
+    const existingUser = await this.userRepository.findById(command.id);
 
     if (!existingUser) {
-      throw new NotFoundError('User', command.clerkId);
+      throw new NotFoundError('User', command.id);
     }
 
-    return await this.userRepository.delete(command.clerkId);
+    return await this.userRepository.delete(command.id);
   }
 
   // GetUserUseCase
@@ -73,8 +73,9 @@ export class UserService implements GetUserUseCase {
     return await this.userRepository.findById(query.id);
   }
 
+  // Alias pour compatibilité: clerkId EST maintenant l'id
   async getByClerkId(query: GetUserByClerkIdQuery): Promise<User | null> {
-    return await this.userRepository.findByClerkId(query.clerkId);
+    return await this.userRepository.findById(query.clerkId);
   }
 
   async getByEmail(query: GetUserByEmailQuery): Promise<User | null> {

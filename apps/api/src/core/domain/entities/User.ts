@@ -8,7 +8,6 @@ export enum UserRole {
 
 export interface UserProps {
   id: string;
-  clerkId: string;
   email: Email | null;
   role: UserRole;
   firstName: string | null;
@@ -20,7 +19,7 @@ export interface UserProps {
 }
 
 export interface CreateUserProps {
-  clerkId: string;
+  id: string;
   email: string | null;
   role: UserRole;
   firstName?: string | null;
@@ -32,15 +31,14 @@ export class User {
 
   // Factory method pour créer un nouvel utilisateur
   static create(data: CreateUserProps): User {
-    if (!data.clerkId) {
+    if (!data.id) {
       throw new ValidationError('ClerkId is required');
     }
 
     const email = data.email ? new Email(data.email) : null;
 
     return new User({
-      id: '', // Sera généré par la DB
-      clerkId: data.clerkId,
+      id: data.id,
       email,
       role: data.role,
       firstName: data.firstName ?? null,
@@ -60,10 +58,6 @@ export class User {
   // Getters
   get id(): string {
     return this.props.id;
-  }
-
-  get clerkId(): string {
-    return this.props.clerkId;
   }
 
   get email(): Email | null {
