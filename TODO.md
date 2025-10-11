@@ -16,19 +16,19 @@
   - [✅] Créer migration Prisma
   - [✅] Générer client Prisma
 
-- [ ] **1.2 - Créer module `pro-profiles`**
-  - [ ] `pro-profile.types.ts` (DTOs: CreateProProfileDTO, UpdateProProfileDTO, ValidationDTO)
-  - [ ] `pro-profile.repository.ts` (CRUD Prisma)
-  - [ ] `pro-profile.service.ts` (logique métier, validation)
-  - [ ] `pro-profile.controller.ts` (endpoints HTTP)
-  - [ ] `pro-profile.routes.ts` (définition routes)
-  - [ ] `index.ts` (exports)
+- [✅] **1.2 - Créer module `pro-profiles`**
+  - [✅] `pro-profile.types.ts` (DTOs: CreateProProfileDTO, UpdateProProfileDTO, ValidationDTO)
+  - [✅] `pro-profile.repository.ts` (CRUD Prisma)
+  - [✅] `pro-profile.service.ts` (logique métier, validation)
+  - [✅] `pro-profile.controller.ts` (endpoints HTTP)
+  - [✅] `pro-profile.routes.ts` (définition routes)
+  - [✅] `index.ts` (exports)
 
 ---
 
 ### 🏢 Intégration API INSEE
 
-- [ ] **2.1 - Service INSEE**
+- [✅] **2.1 - Service INSEE**
   - [ ] Créer `services/insee/insee.service.ts`
   - [ ] Méthode `validateSIRET(siret: string)` → retourne données entreprise
   - [ ] Gestion des erreurs (SIRET invalide, entreprise non trouvée, API down)

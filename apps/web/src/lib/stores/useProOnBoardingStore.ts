@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { OnboardingStep, ProOnboardingFormData } from '@/lib/types/pro-onboarding.types';
+import { OnboardingStep, ProOnboardingFormData, ProProfileResponse } from '@/lib/types/pro-onboarding.types';
 
 interface ProOnboardingState {
   // État du formulaire
@@ -14,6 +14,8 @@ interface ProOnboardingState {
   setCurrentStep: (step: OnboardingStep) => void;
   nextStep: () => void;
   previousStep: () => void;
+
+  hydrateFromReactQuery: (profileData: ProProfileResponse) => void;
 
   updateFormData: <K extends keyof ProOnboardingFormData>(key: K, data: ProOnboardingFormData[K]) => void;
 
@@ -40,6 +42,40 @@ export const useProOnboardingStore = create<ProOnboardingState>()(
       currentStep: OnboardingStep.ENTERPRISE_INFO,
       formData: {},
       completedSteps: new Set(),
+
+      hydrateFromReactQuery: (profileData: ProProfileResponse) => {
+        // Mapper les données API vers le format du store
+        set({
+          formData: {
+            enterpriseInfo: {
+              businessName: profileData.businessName || '',
+              profession: profileData.profession || '',
+              experience: profileData.experience || 0,
+              certifications: profileData.certifications || [],
+              bio: profileData.bio || '',
+            },
+            professionalInfo: {
+              siret: profileData.siret || '',
+              corporateName: profileData.corporateName || '',
+              legalForm: profileData.legalForm,
+              legalStatus: profileData.legalStatus,
+            },
+            location: {
+              address: profileData.address || '',
+              postalCode: profileData.postalCode || '',
+              city: profileData.city || '',
+              latitude: profileData.latitude,
+              longitude: profileData.longitude,
+              radius: profileData.radius || 10,
+            },
+            media: {
+              photos: profileData.photos || [],
+            },
+          },
+          currentStep: profileData.onboardingStep || OnboardingStep.ENTERPRISE_INFO,
+          completedSteps: new Set(profileData.completedSteps || []),
+        });
+      },
 
       setCurrentStep: step => {
         const canGo = get().canGoToStep(step);

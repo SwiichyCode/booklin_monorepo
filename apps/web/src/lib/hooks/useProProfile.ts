@@ -4,16 +4,23 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { proProfileService } from '@/lib/services/proProfile.service';
 import { toast } from 'react-hot-toast';
 import type { OnboardingStep, ProOnboardingFormData } from '@/lib/types/pro-onboarding.types';
+import { useUser } from '@clerk/nextjs';
 
 /**
  * Hook pour récupérer le profil pro de l'utilisateur
  */
 export function useProProfile() {
+  const { user, isLoaded } = useUser();
+
   return useQuery({
-    queryKey: ['proProfile', 'me'],
-    queryFn: () => proProfileService.getMyProfile(),
+    queryKey: ['proProfile', 'user', user?.id],
+    queryFn: () => {
+      if (!user?.id) throw new Error('User not authenticated');
+      return proProfileService.getMyProfile(user.id);
+    },
     retry: false,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    enabled: isLoaded && !!user?.id, // 👈 Ne lance la requête que si Clerk est chargé ET userId existe
   });
 }
 

@@ -53,13 +53,40 @@ export interface ProOnboardingFormData {
 export interface ProProfileResponse {
   id: string;
   userId: string;
-  onboardingStep: OnboardingStep;
-  onboardingProgress: number;
-  onboardingComplete: boolean;
-  validationStatus: ValidationStatus;
-  isActive: boolean;
-  isPremium: boolean;
-  // ... autres champs
+
+  // Données métier
+  businessName?: string;
+  profession?: string;
+  experience?: number;
+  certifications?: string[];
+  bio?: string;
+
+  siret?: string;
+  corporateName?: string;
+  legalForm?: string;
+  legalStatus?: string;
+
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  latitude?: number;
+  longitude?: number;
+  radius?: number;
+
+  photos?: string[];
+
+  // Métadonnées onboarding
+  onboardingStep?: OnboardingStep;
+  onboardingProgress?: number;
+  onboardingComplete?: boolean;
+  completedSteps?: OnboardingStep[]; // 👈 Important pour hydrater le store
+
+  validationStatus?: ValidationStatus;
+  isActive?: boolean;
+  isPremium?: boolean;
+
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // Configuration des étapes

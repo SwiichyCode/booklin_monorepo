@@ -3,7 +3,7 @@ import type { Router as ExpressRouter } from 'express';
 import { $Enums } from '@prisma/client';
 import { container } from 'tsyringe';
 import { ProProfileController } from '@/adapters/in/http/controllers/ProProfileController';
-import { RequireRolesMiddleware } from '../middleware/auth';
+import { RequireAuthMiddleware, RequireRolesMiddleware } from '../middleware/auth';
 import { endpoints, getRelativePath, BASE_PATH as PRO_PROFILES_BASE_PATH } from '@repo/endpoints';
 
 const router: ExpressRouter = Router();
@@ -51,7 +51,10 @@ router.get('/:id', (req, res) => proProfileController.getProProfileById(req, res
  * @desc    Get professional profile by user ID
  * @access  Public
  */
-router.get('/user/:userId', (req, res) => proProfileController.getProProfileByUserId(req, res));
+
+router.get('/user/:userId', RequireAuthMiddleware(), (req, res) =>
+  proProfileController.getProProfileByClerkId(req, res),
+);
 
 /**
  * @route   GET /api/pro-profiles

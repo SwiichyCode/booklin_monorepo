@@ -1,15 +1,13 @@
-// lib/api/services/proProfile.service.ts
-
-import { apiClient } from '@/lib/api/client';
+import { apiClient, ApiResponse } from '@/lib/api/client';
 import type { ProProfileResponse, OnboardingStep, ProOnboardingFormData } from '@/lib/types/pro-onboarding.types';
 
 export const proProfileService = {
   /**
    * Récupère le profil pro de l'utilisateur connecté
    */
-  getMyProfile: async (): Promise<ProProfileResponse> => {
-    const { data } = await apiClient.get('/pro-profiles/me');
-    return data;
+  getMyProfile: async (userId: string): Promise<ProProfileResponse> => {
+    const response = await apiClient.get<ApiResponse<ProProfileResponse>>(`/pro-profiles/user/${userId}`);
+    return response.data.data;
   },
 
   /**

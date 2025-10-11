@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -12,6 +12,7 @@ import { SelectForm } from '@/components/shared/select-form';
 import { TextAreaForm } from '@/components/shared/textarea-form';
 import { Button } from '@/components/ui/button';
 import { OnboardingStep } from '@/lib/types/pro-onboarding.types';
+import { proProfileService } from '@/lib/services/proProfile.service';
 
 interface EnterpriseInfoStepProps {
   onNext: () => void;
@@ -33,6 +34,19 @@ export function EnterpriseInfoStep({ onNext, onPrevious }: EnterpriseInfoStepPro
     },
   });
 
+  // 🔥 Réhydrater le formulaire si les données changent (après fetch React Query)
+  useEffect(() => {
+    if (formData.enterpriseInfo) {
+      form.reset({
+        businessName: formData.enterpriseInfo.businessName ?? '',
+        profession: formData.enterpriseInfo.profession ?? '',
+        experience: formData.enterpriseInfo.experience ?? 0,
+        certifications: formData.enterpriseInfo.certifications ?? [],
+        bio: formData.enterpriseInfo.bio ?? '',
+      });
+    }
+  }, [formData.enterpriseInfo, form]);
+
   const onSubmit = async (data: EnterpriseInfoFormData) => {
     setIsSubmitting(true);
 
@@ -42,7 +56,7 @@ export function EnterpriseInfoStep({ onNext, onPrevious }: EnterpriseInfoStepPro
     updateFormData('enterpriseInfo', data);
 
     // Call API Service
-
+    proProfileService.updateProfileStep(OnboardingStep.ENTERPRISE_INFO, data);
     markStepComplete(OnboardingStep.ENTERPRISE_INFO);
 
     onNext();

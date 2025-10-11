@@ -12,12 +12,16 @@ import {
   renewPremiumSchema,
   proProfileFiltersSchema,
 } from '../validation/proProfile.validation';
+import { UserService } from '@/core/services/UserService';
 
 @injectable()
 export class ProProfileController {
   constructor(
+    // 👈 Injection des services
     @inject('ProProfileServiceInstance')
-    private readonly proProfileService: ProProfileService
+    @inject('UserServiceInstance')
+    private readonly proProfileService: ProProfileService,
+    private readonly userService: UserService,
   ) {}
 
   // ========================================
@@ -134,6 +138,39 @@ export class ProProfileController {
     }
   }
 
+  async getProProfileByClerkId(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = req.params.userId as string;
+
+      const user = await this.userService.getByClerkId({ clerkId: userId });
+
+      if (!user) {
+        res.status(404).json({
+          success: false,
+          error: 'User not found',
+        });
+        return;
+      }
+
+      const proProfile = await this.proProfileService.findByUserId(user.id);
+
+      if (!proProfile) {
+        res.status(404).json({
+          success: false,
+          error: 'ProProfile not found',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: this.toDTO(proProfile),
+      });
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  }
+
   async getAllProProfiles(req: Request, res: Response): Promise<void> {
     try {
       // Validate query parameters
@@ -143,7 +180,7 @@ export class ProProfileController {
 
       res.status(200).json({
         success: true,
-        data: proProfiles.map((profile) => this.toDTO(profile)),
+        data: proProfiles.map(profile => this.toDTO(profile)),
         count: proProfiles.length,
       });
     } catch (error) {
